@@ -76,11 +76,14 @@ public class CmsArticleDto {
 	    private String originalContent;
 	    private String categoryName;
 
-		private String statusName;
+		private String statusname;
 	    
 		//封面图数组
 		private List<String> coverimgList;
-	    
+		//分类名称
+		private String categoryname;
+	
+
 		public List<String> getCoverimgList() {
 			return coverimgList;
 		}
@@ -387,12 +390,20 @@ public class CmsArticleDto {
 			this.createtime = createtime;
 		}
 
-		public String getStatusName() {
-			return statusName;
+		public String getStatusname() {
+			return statusname;
 		}
 
-		public void setStatusName(String statusName) {
-			this.statusName = statusName;
+		public void setStatusname(String statusname) {
+			this.statusname = statusname;
+		}
+
+		public String getCategoryname() {
+			return categoryname;
+		}
+
+		public void setCategoryname(String categoryname) {
+			this.categoryname = categoryname;
 		}
 
 

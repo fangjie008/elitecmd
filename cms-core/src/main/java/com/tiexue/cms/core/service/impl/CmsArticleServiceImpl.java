@@ -149,7 +149,7 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 	@Override
 	public int deleteArticle(int id) {
 
-	     int updateNum=cmsArticleMapper.deleteArticle(CmsContants.ArticleStatus_Deleted, id);
+	     int updateNum=cmsArticleMapper.updeteStatus(CmsContants.ArticleStatus_Deleted, id);
 	     return updateNum;
 		   
 	}
@@ -161,7 +161,7 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 	@Override
 	public int recoverArticle(int id) {
 
-	     int updateNum=cmsArticleMapper.deleteArticle(CmsContants.ArticleStatus_Normal, id);
+	     int updateNum=cmsArticleMapper.updeteStatus(CmsContants.ArticleStatus_Normal, id);
 	     return updateNum;
 		   
 	}

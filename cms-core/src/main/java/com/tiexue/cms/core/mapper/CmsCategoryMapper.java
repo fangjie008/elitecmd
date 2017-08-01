@@ -1,5 +1,6 @@
 package com.tiexue.cms.core.mapper;
 
+import com.tiexue.cms.core.entity.CmsArticle;
 import com.tiexue.cms.core.entity.CmsCategory;
 
 import java.util.List;
@@ -80,4 +81,41 @@ public interface CmsCategoryMapper {
           "where Status = #{status,jdbcType=VARCHAR}"
     })
     List<CmsCategory> getNormalList(@Param("status")Integer status);
+    
+    @Select({
+        "select",
+        "Id, Name, CoverImg, Status, Type, Intro, Weight, Tags, ParentId, CreateTime, ",
+        "Remark",
+        "from CmsCategory",
+        "where Id = #{id,jdbcType=INTEGER}"
+    })
+    @ResultMap("BaseResultMap")
+    CmsCategory getModel(@Param("id")int id);
+    
+    @Select({
+        "select",
+        "Id, Name, CoverImg, Status, Type, Intro, Weight, Tags, ParentId, CreateTime, ",
+        "Remark",
+        "from CmsCategory",
+        "where ${strWhere} order by CreateTime desc limit #{pageNo,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} "
+    })
+    @ResultMap("BaseResultMap")
+    List<CmsCategory> getList(@Param("strWhere")String strWhere,@Param("pageNo")Integer pageNo,@Param("pageSize")Integer pageSize);
+    
+    
+    @Select({
+        "select",
+        " count(1)",
+        "from CmsCategory",
+        "where ${strWhere} "
+    })
+    int getCount(@Param("strWhere")String strWhere);
+    
+    
+    @Update({
+        "update CmsCategory",
+        "set Status = #{status,jdbcType=INTEGER} ",
+        "where Id = #{id,jdbcType=INTEGER}"
+    })
+    int updeteStatus(@Param("status")int status,@Param("id")int id);
 }

@@ -134,7 +134,7 @@ public interface CmsArticleMapper {
         "OriginalUrl, FromId, FromName, PlatformId, PlatformName, Tags, ContentLen, CategoryId, ",
         "Uscore, UniqueFlag",
         "from CmsArticle",
-        "where Id = #{id,jdbcType=INTEGER} and status=1"
+        "where Id = #{id,jdbcType=INTEGER}"
     })
     @ResultMap("BaseResultMap")
     CmsArticle getModel(@Param("id")int id);
@@ -167,5 +167,5 @@ public interface CmsArticleMapper {
         "set Status = #{status,jdbcType=INTEGER} ",
         "where Id = #{id,jdbcType=INTEGER}"
     })
-    int deleteArticle(@Param("status")int status,@Param("id")int id);
+    int updeteStatus(@Param("status")int status,@Param("id")int id);
 }

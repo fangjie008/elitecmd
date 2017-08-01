@@ -2,35 +2,34 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
 <%@ include file="/WEB-INF/views/include/global.jsp"%>
-<title>文章列表</title>
+<title>分类列表</title>
 </head>
 <body class="body">
 	<fieldset class="layui-elem-field layui-field-title">
 		<legend>
-			<span class="layui-breadcrumb"> <a href="javascript:;">文章列表</a> <a><cite>查看</cite></a>
+			<span class="layui-breadcrumb"> <a href="javascript:;">分类列表</a> <a><cite>查看</cite></a>
 			</span>
 		</legend>
 	</fieldset>
 
 	<div class="my-btn-box">
-		<span class="f1"> <a class="layui-btn btn-add btn-default" href="<%=path%>/article/detail">新增文章</a>
+		<span class="f1"> <a class="layui-btn btn-add btn-default" href="<%=path%>/category/detail">新增分类</a>
 		</span>
 	</div>
 	<table id="dateTable" class="layui-table">
 		<thead>
 			<tr>
 				<th>ID</th>
-				<th>封面图</th>
-				<th>标题</th>
-				<th>浏览量</th>
+				<th>分类名称</th>
+				<th>简介</th>
+				<th>备注</th>
 				<th>新增时间</th>
-				<th>分类</th>
 				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${articles}" var="info">
+			<c:forEach items="${categorys}" var="info">
 			     <c:choose>
 						<c:when test="${info.status==1}">
 							<tr >
@@ -41,19 +40,10 @@
 				 </c:choose>
 			
 				    <td>${info.id}</td>
-				   
-				    <td>
-				    <c:choose>
-				    	<c:when test="${info.coverimgList==null||info.coverimgList.size()<=0}"></c:when>
-				    	<c:otherwise>
-				    	<img alt="" src="${info.coverimgList.get(0)}">
-				    	</c:otherwise>
-				    </c:choose>
-					</td>
-					 <td>${info.title}</td>
-					<td>${info.viewcount}</td>
+					 <td>${info.name}</td>
+					<td>${info.intro}</td>
+					<td>${info.remark}</td>
 					<td>${info.createtime}</td>
-					<td>${info.categoryname}</td>
 					<td>${info.statusname}</td>
 					<td>
 						<button class="layui-btn layui-btn-small layui-btn-normal" onclick="edit('${info.id}')">编辑</button>
@@ -95,24 +85,24 @@ var pindex=1;
                 //防止无限刷新,
                 //只有监听到的页面index 和当前页不一样是才出发分页查询
                 if (pindex!=""&&pindex!="0"&&(obj.curr != pindex)) {
-                	location.href='<%=path%>/article/list?pindex='+obj.curr;
+                	location.href='<%=path%>/category/list?pindex='+obj.curr;
                 }
             }
         });
     });
 
     function edit(id){
-    	location.href='<%=path%>/article/detail?id='+id+'&pindex='+pindex;
+    	location.href='<%=path%>/category/detail?id='+id+'&pindex='+pindex;
     }
     function deleteBaseInfo(id){
     	$.ajax({
-    		url:'<%=path%>/article/deleteModel?id='+id
+    		url:'<%=path%>/category/deleteModel?id='+id
     	    ,type:"post"
     	    ,dataType:"json"
     	    ,success:function(data){
     	    	if(data.ok){
         			alert(data.msg);
-        			location.href ='<%=path%>/article/list?pindex='+pindex;
+        			location.href ='<%=path%>/category/list?pindex='+pindex;
         		}else{
         			alert(data.msg);
         			//登录超时
@@ -129,13 +119,13 @@ var pindex=1;
 		}
     function recover(id){
     	$.ajax({
-    		url:'<%=path%>/article/recover?id='+id
+    		url:'<%=path%>/category/recover?id='+id
     	    ,type:"post"
     	    ,dataType:"json"
     	    ,success:function(data){
     	    	if(data.ok){
         			alert(data.msg);
-        			location.href ='<%=path%>/article/list?pindex='+pindex;
+        			location.href ='<%=path%>/category/list?pindex='+pindex;
         		}else{
         			alert(data.msg);
         			//登录超时

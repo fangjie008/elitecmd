@@ -64,7 +64,8 @@ public class CmsArticleController {
 				pStart=pStart-psize;
 			}
 			List<CmsArticle> articles= iCmsArticleService.getList("1=1",pStart,psize);
-			List<CmsArticleDto> articledtos =ArticleConvert.articleListToDto(articles);
+			List<CmsCategory> categories= iCmsCategoryService.getNormalList();
+			List<CmsArticleDto> articledtos =ArticleConvert.articleListToDto(articles,categories);
 			Paging paging=new Paging();
 			paging.setPcount(pcount);
 			paging.setPsize(psize);

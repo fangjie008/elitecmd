@@ -11,6 +11,7 @@ import com.tiexue.cms.base.util.DateUtil;
 import com.tiexue.cms.core.define.CmsContants;
 import com.tiexue.cms.core.dto.CmsArticleDto;
 import com.tiexue.cms.core.entity.CmsArticle;
+import com.tiexue.cms.core.entity.CmsCategory;
 import com.tiexue.cms.manage.controller.CmsArticleController;
 
 public class ArticleConvert {
@@ -63,12 +64,12 @@ public class ArticleConvert {
 	 * @param articles
 	 * @return
 	 */
-	public static List<CmsArticleDto> articleListToDto(List<CmsArticle> articles){
+	public static List<CmsArticleDto> articleListToDto(List<CmsArticle> articles,List<CmsCategory> categorys){
 		List<CmsArticleDto> articleDtos=new ArrayList<CmsArticleDto>();
 		if(articles==null||articles.size()<=0)
 			return articleDtos;
 		for (CmsArticle article : articles) {
-			articleDtos.add(articleToDto(article));
+			articleDtos.add(articleToDto(article,categorys));
 		}
 		return articleDtos;
 	}
@@ -78,7 +79,7 @@ public class ArticleConvert {
 	 * @param article
 	 * @return
 	 */
-	public static CmsArticleDto articleToDto(CmsArticle article){
+	public static CmsArticleDto articleToDto(CmsArticle article,List<CmsCategory> categorys){
 		CmsArticleDto articleDto=new CmsArticleDto();
 		articleDto.setId(article.getId());
 		articleDto.setCaicount(article.getCaicount()==null?0:article.getCaicount());
@@ -119,7 +120,16 @@ public class ArticleConvert {
 		
 		articleDto.setShowtime(DateUtil.date2Str(article.getShowtime(), "yyyy-MM-dd HH:mm:ss"));
 		articleDto.setCreatetime(DateUtil.date2Str(article.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
-		articleDto.setStatusName(CmsContants.ArticleType.get(article.getStatus()));
+		articleDto.setStatusname(CmsContants.ArticleType.get(article.getStatus()));
+		if(categorys!=null&&!categorys.isEmpty()&&categorys.size()>0){
+			for (CmsCategory cmsCategory : categorys) {
+				if(cmsCategory.getId().equals(article.getCategoryid())){
+					articleDto.setCategoryname(cmsCategory.getName());
+					break;
+				}
+			}
+			
+		}
 	    try {
 	    	@SuppressWarnings("unchecked")
 			List<String> imgs= JSON.parseObject(article.getCoverimgs(),new ArrayList<String>().getClass());

@@ -74,11 +74,11 @@ public class CmsContants {
 		/**
 		 * 分类状态-正常
 		 */
-		public static final int CategoryStatus_Normal=0;
+		public static final int CategoryStatus_Normal=1;
 		/**
 		 * 分类状态-删除
 		 */
-		public static final int CategoryStatus_Delete=1;
+		public static final int CategoryStatus_Delete=2;
 		
 		/**
 		 * 分类状态

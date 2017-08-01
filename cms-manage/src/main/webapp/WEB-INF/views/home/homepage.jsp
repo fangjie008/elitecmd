@@ -51,6 +51,8 @@
                        <c:when test="${type==1}">
                            <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/article/list">
 	                        <i class="layui-icon">&#xe621;</i>文章管理</a></dd>
+	                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/category/list">
+	                        <i class="layui-icon">&#xe621;</i>分类管理</a></dd>
 	                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/list">
 	                        <i class="layui-icon">&#xe621;</i>用户管理</a></dd>
 	                        <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/editPassword">
@@ -59,6 +61,8 @@
                         <c:when test="${type==2}">
                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/article/list">
 	                        <i class="layui-icon">&#xe621;</i>文章管理</a></dd>
+	                           <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/category/list">
+	                        <i class="layui-icon">&#xe621;</i>分类管理</a></dd>
                           <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/editPassword">
 	                        <i class="layui-icon">&#xe621;</i>修改密码</a></dd>
                         </c:when>
