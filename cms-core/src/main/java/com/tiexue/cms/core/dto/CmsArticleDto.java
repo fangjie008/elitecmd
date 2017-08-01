@@ -1,5 +1,7 @@
 package com.tiexue.cms.core.dto;
 
+import java.util.List;
+
 public class CmsArticleDto {
 
 
@@ -76,7 +78,17 @@ public class CmsArticleDto {
 
 		private String statusName;
 	    
+		//封面图数组
+		private List<String> coverimgList;
 	    
+		public List<String> getCoverimgList() {
+			return coverimgList;
+		}
+
+		public void setCoverimgList(List<String> coverimgList) {
+			this.coverimgList = coverimgList;
+		}
+
 		public Integer getId() {
 			return id;
 		}

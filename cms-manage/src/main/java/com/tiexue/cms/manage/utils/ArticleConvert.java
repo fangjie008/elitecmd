@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSON;
 import com.tiexue.cms.base.util.DateUtil;
 import com.tiexue.cms.core.define.CmsContants;
 import com.tiexue.cms.core.dto.CmsArticleDto;
 import com.tiexue.cms.core.entity.CmsArticle;
+import com.tiexue.cms.manage.controller.CmsArticleController;
 
 public class ArticleConvert {
-
+	 private static Logger logger = Logger.getLogger(ArticleConvert.class);
 	/**
 	 * 必填项填充
 	 * @param article
@@ -116,6 +120,14 @@ public class ArticleConvert {
 		articleDto.setShowtime(DateUtil.date2Str(article.getShowtime(), "yyyy-MM-dd HH:mm:ss"));
 		articleDto.setCreatetime(DateUtil.date2Str(article.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
 		articleDto.setStatusName(CmsContants.ArticleType.get(article.getStatus()));
+	    try {
+	    	@SuppressWarnings("unchecked")
+			List<String> imgs= JSON.parseObject(article.getCoverimgs(),new ArrayList<String>().getClass());
+	    	articleDto.setCoverimgList(article.getCoverimgs()==null?new ArrayList<String>():imgs);
+		} catch (Exception e) {
+			logger.debug("articleToDto execption :"+e);
+		}
+		
 		return articleDto;
 	}
 

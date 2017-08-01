@@ -143,23 +143,28 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 		return cmsArticle;
 	}
 
+	/**
+	 * 文章删除（逻辑删除）
+	 */
 	@Override
-	@Transactional
 	public int deleteArticle(int id) {
-		try {
-			
-		     int updateNum=deleteByPrimaryKey(id);
-		     updateNum=iCmsArticleSubService.delete(id);
-		     return updateNum;
-		    
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			//必须抛出异常 否则事务就不能正常执行
-			throw e;
-		}
 
+	     int updateNum=cmsArticleMapper.deleteArticle(CmsContants.ArticleStatus_Deleted, id);
+	     return updateNum;
+		   
 	}
 	
+	
+	/**
+	 * 恢复文章
+	 */
+	@Override
+	public int recoverArticle(int id) {
+
+	     int updateNum=cmsArticleMapper.deleteArticle(CmsContants.ArticleStatus_Normal, id);
+	     return updateNum;
+		   
+	}
 
 
 }

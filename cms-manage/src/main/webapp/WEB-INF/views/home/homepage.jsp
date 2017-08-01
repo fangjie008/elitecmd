@@ -34,7 +34,7 @@
             <li class="layui-nav-item">
                 <a class="name" href="javascript:;"><img src="<%=path%>/static/image/code.png" alt="logo"> ${name} </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="<%=path%>/"><i class="layui-icon">&#x1006;</i>退出</a></dd>
+                    <dd><a href="<%=path%>/admin/loginOut"><i class="layui-icon">&#x1006;</i>退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -53,15 +53,13 @@
 	                        <i class="layui-icon">&#xe621;</i>文章管理</a></dd>
 	                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/list">
 	                        <i class="layui-icon">&#xe621;</i>用户管理</a></dd>
-	                        <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/changePassword">
+	                        <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/editPassword">
 	                        <i class="layui-icon">&#xe621;</i>修改密码</a></dd>
                        </c:when>
                         <c:when test="${type==2}">
                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/article/list">
 	                        <i class="layui-icon">&#xe621;</i>文章管理</a></dd>
-	                         <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/list">
-	                        <i class="layui-icon">&#xe621;</i>用户管理</a></dd>
-                          <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/changePassword">
+                          <dd class="layui-nav-item"><a href="javascript:;" href-url="<%=path%>/admin/editPassword">
 	                        <i class="layui-icon">&#xe621;</i>修改密码</a></dd>
                         </c:when>
                         <c:otherwise>

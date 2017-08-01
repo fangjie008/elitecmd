@@ -7,13 +7,21 @@ import org.apache.commons.io.monitor.FileAlterationListener;
 
 public class CmsContants {
 
-	   // 文章状态 正常
+	    /**
+	     * 文章状态 正常
+	     */
 		public static final int ArticleStatus_Normal = 1;
-		// 文章状态 删除
+		/**
+		 * 文章状态 删除
+		 */
 		public static final int ArticleStatus_Deleted = 2;
-		// 审核
+		/**
+		 * 审核
+		 */
 		public static final int ArticleStatus_Audited = 3;
-		// 相似文章
+		/**
+		 * 相似文章
+		 */
 		public static final int ArticleStatus_Similarity = 4;
 		/**
 		 * 文章状态
@@ -26,13 +34,21 @@ public class CmsContants {
 				put(ArticleStatus_Similarity, "相似文章");
 			}
 		};
-		//帖子
+		/**
+		 * 帖子
+		 */
 		public static final int SourceType_Forum=1;
-		//资讯
+		/**
+		 * 资讯
+		 */
 		public static final int SourceType_News=2;
-		//视频
+		/**
+		 * 视频
+		 */
 		public static final int SourceType_Video=3;
-		//图片
+		/**
+		 * 图片
+		 */
 		public static final int SourceType_Pic=4;
 		/**
 		 * 来源文章类型

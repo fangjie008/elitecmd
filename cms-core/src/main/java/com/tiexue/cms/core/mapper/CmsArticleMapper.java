@@ -160,4 +160,12 @@ public interface CmsArticleMapper {
         "where ${strWhere} "
     })
     int getCount(@Param("strWhere")String strWhere);
+    
+    
+    @Update({
+        "update CmsArticle",
+        "set Status = #{status,jdbcType=INTEGER} ",
+        "where Id = #{id,jdbcType=INTEGER}"
+    })
+    int deleteArticle(@Param("status")int status,@Param("id")int id);
 }

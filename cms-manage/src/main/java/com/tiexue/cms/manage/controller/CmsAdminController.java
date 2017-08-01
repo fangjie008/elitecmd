@@ -1,10 +1,16 @@
 package com.tiexue.cms.manage.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +19,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.tiexue.cms.core.define.CmsAdminType;
+import com.tiexue.cms.core.dto.CmsAdminDto;
 import com.tiexue.cms.core.entity.CmsAdmin;
 import com.tiexue.cms.core.service.ICmsAdminService;
+import com.tiexue.cms.core.shiro.PasswordHelper;
+import com.tiexue.cms.manage.controller.CommonUtil;
+import com.tiexue.cms.manage.dto.ResultMsg;
+import com.tiexue.cms.manage.utils.AdminConvert;
+import com.tiexue.cms.manage.utils.TransToPage;
 
 @Controller
 @RequestMapping("admin")
@@ -26,13 +40,18 @@ public class CmsAdminController {
 	
 	Logger logger=Logger.getLogger(CmsAdminController.class);
 	
+	@Autowired
+    private PasswordHelper passwordHelper;
+	
 	/**
 	 * 查询用户列表
 	 **/
 	// @RequiresRoles("admin")
 	@RequestMapping("list")
 	public String getList(Model model) {
-		model.addAttribute("userList", cmsAdminSer.getList());
+		List<CmsAdmin> admins= cmsAdminSer.getList();
+		List<CmsAdminDto> adminDtos= AdminConvert.toAdminListDto(admins);
+		model.addAttribute("userList",adminDtos);
 		return "admin/list";
 	}
 
@@ -41,7 +60,9 @@ public class CmsAdminController {
 	 **/
 	// @RequiresRoles("admin")
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public String showAddUser() {
+	public String showAddUser(HttpServletRequest request) {
+		String type= TransToPage.mapToOptions(true, 0,CmsAdminType.AdminTypeMap);
+		request.setAttribute("type", type);
 		return "admin/add";
 	}
 
@@ -50,18 +71,46 @@ public class CmsAdminController {
 	 **/
 	// @RequiresRoles("admin")
 	@RequestMapping(value = "doAddUser", method = RequestMethod.POST)
+	@ResponseBody
 	public String doAddUser(String username, String password, String intro, String roles,
-			RedirectAttributes redirectAttributes) {
-		CmsAdmin user = new CmsAdmin();
-		user.setName(username);
-		user.setIntro(intro);
-		user.setPassword(password);
-		user.setAuth(roles);
-
-		cmsAdminSer.addUser(user);
-
-		redirectAttributes.addAttribute("msg", "新增成功");
-		return "redirect:/admin/list";
+			Integer type) {
+		ResultMsg resultMsg = new ResultMsg();
+		resultMsg.setOk(false);
+		try {
+			CmsAdmin user = new CmsAdmin();
+			user.setName(username);
+			user.setIntro(intro);
+			user.setPassword(password);
+			user.setAuth(roles);
+			user.setType(type);
+			cmsAdminSer.addUser(user);
+			resultMsg.setOk(true);
+			resultMsg.setMsg("保存成功");
+		} catch (Exception e) {
+			logger.debug(" doAddUser execption:"+e);
+			resultMsg.setMsg("保存失败");
+		}
+		
+		return JSON.toJSONString(resultMsg);
+	}
+	@RequestMapping("checkName")
+	@ResponseBody
+	public String checkName(HttpServletRequest request,String username){
+		ResultMsg resultMsg = new ResultMsg();
+		resultMsg.setOk(false);
+		try {
+			if(username!=null){
+			 CmsAdmin admin= cmsAdminSer.getByName(username);
+			 if(admin!=null&&admin.getName()!=null)
+				 resultMsg.setOk(true);
+			}
+			resultMsg.setMsg("用户已存在");
+		} catch (Exception e) {
+			logger.debug(" checkName exception:"+e);
+			resultMsg.setMsg("查询失败");
+		}
+		
+		return JSON.toJSONString(resultMsg);
 	}
 
 	/**
@@ -69,8 +118,14 @@ public class CmsAdminController {
 	 **/
 	@RequiresRoles("admin")
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("CmsAdmin", cmsAdminSer.getById(id));
+	public String showUpdateForm(HttpServletRequest request,@PathVariable("id") Integer id, Model model) {
+		CmsAdmin cmsAdmin= cmsAdminSer.getById(id);
+		CmsAdminDto cmsAdminDto=AdminConvert.toAdminDto(cmsAdmin);
+		if(cmsAdminDto!=null){
+			String type= TransToPage.mapToOptions(true, cmsAdminDto.getType(),CmsAdminType.AdminTypeMap);
+			request.setAttribute("type", type);
+		}
+		model.addAttribute("cmsAdmin", cmsAdminDto);
 		return "admin/edit";
 	}
 
@@ -81,22 +136,21 @@ public class CmsAdminController {
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String doUpdate(CmsAdmin user, RedirectAttributes redirectAttributes) {
-		JSONObject jObject = new JSONObject();
+		ResultMsg resultMsg = new ResultMsg();
+		resultMsg.setOk(false);
 		try {
 			CmsAdmin CmsAdmin = cmsAdminSer.getById(user.getId());
 			CmsAdmin.setAuth(user.getAuth());
 			CmsAdmin.setIntro(user.getIntro());
+			CmsAdmin.setType(user.getType());
 			cmsAdminSer.update(CmsAdmin);
-			jObject.put("ok",true);
-			jObject.put("msg", "修改成功");
-			// redirectAttributes.addAttribute("msg", "修改成功");
-			// return "redirect:/admin/list";
+			resultMsg.setOk(true);
+			resultMsg.setMsg("修改成功");
 		} catch (Exception e) {
-			// TODO: handle exception
-			jObject.put("ok",false);
-			jObject.put("msg","保存失败");
+			logger.debug("doUpdate exce:"+e);
+			resultMsg.setMsg("保存失败");
 		}
-		return jObject.toString();
+		return JSON.toJSONString(resultMsg);
 	}
 
 	/**
@@ -138,7 +192,7 @@ public class CmsAdminController {
 	 * 修改密码
 	 **/
 	@RequiresRoles("admin")
-	@RequestMapping(value = "/{id}/changepassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/changepassword", method = RequestMethod.GET)
 	public String showChangePassword(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("user", cmsAdminSer.getById(id));
 		model.addAttribute("op", "修改密码");
@@ -158,24 +212,98 @@ public class CmsAdminController {
 	}
 
 
+	
 	/**
-	 * 查询单个用户
+	 * 用户修改自己的密码
 	 **/
-	@RequestMapping("get")
-	public String getUser(HttpServletRequest req, Integer userId) {
-		// todo:查询用户
-		// 赋值给request
-		return "admin/get";
+	@RequestMapping(value = "/editPassword", method = RequestMethod.GET)
+	public String changepassword(HttpServletRequest request) {
+		CmsAdmin cmsAdmin=CommonUtil.getCmsAdmin();
+		if (cmsAdmin == null || cmsAdmin.getId()==null) {
+			return "redirect:/login.jsp";
+		}
+		
+		request.setAttribute("admin", cmsAdmin);
+		return "admin/editPassword";
 	}
 
 	/**
-	 * 修改用户密码
+	 * 修改密码-操作
 	 **/
-	@RequestMapping("changepassword")
-	public String changePwd(HttpServletRequest req) {
-		// todo:查询当前登录用户
-		// todo:执行修改密码操作
-		return "admin/changePassword";
+	@RequestMapping(value = "/savepassword", method = RequestMethod.POST)
+	@ResponseBody
+	public String savePassword(HttpServletRequest request) {
+		ResultMsg resultMsg = new ResultMsg();
+		String password=request.getParameter("password");
+		
+		try {
+			// todo:权限判断	
+			Integer id = 0;
+			id=CommonUtil.getId();
+			if (id == null || id == 0) {
+				return "redirect:/login.jsp";
+			}
+			if(password!=null){
+				//password= Md5Utils.ToBit32(password,McpConstants.Mcp_Md5_Key);
+				//加密方法统一
+			    cmsAdminSer.changePassword(id,password);
+				resultMsg.setOk(true);
+				resultMsg.setMsg("保存成功");
+
+			}
+		} catch (Exception e) {
+			logger.debug("savePassword execption:"+e);
+			resultMsg.setOk(false);
+			resultMsg.setMsg("保存失败");
+		}
+		return JSON.toJSONString(resultMsg);
 	}
+	
+	/**
+	 * 验证密码是否正确
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("check")
+	@ResponseBody
+	public String checkPassword(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		JSONObject jObject=new JSONObject();
+		String oldpassword=request.getParameter("oldpassword");
+		String md5password=request.getParameter("md5password");
+		if(oldpassword!=null&&md5password!=null){
+			oldpassword=passwordHelper.encryptPassword(oldpassword);;
+			if(oldpassword.equals(md5password.toLowerCase())){
+				jObject.put("ok", true);
+			}
+			else{
+				jObject.put("ok", false);
+			}
+		}
+		return jObject.toString();
+	}
+	
+	
+	/**
+	 * 登出
+	 * 
+	 * @param userName
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("loginOut")
+	public String logout(Model model) {
+		try {
+			Subject subject = SecurityUtils.getSubject();
+			subject.logout();
+			return "redirect:/login.jsp";
+		} catch (Exception e) {
+			logger.debug("loginOut execption :"+e);
+		}
+		return "redirect:/login.jsp";
+	
+	}
+
 
 }

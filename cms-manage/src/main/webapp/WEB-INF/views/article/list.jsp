@@ -30,16 +30,40 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${articles}" var="info">
-				<tr>
+			     <c:choose>
+						<c:when test="${info.status==1}">
+							<tr >
+						</c:when>
+						<c:otherwise>
+							<tr style="background-color: #f9d8d8">
+						</c:otherwise>
+				 </c:choose>
+			
 				    <td>${info.id}</td>
-				    <td>${info.title}</td>
-					<td>${info.title}</td>
+				   
+				    <td>
+				    <c:choose>
+				    	<c:when test="${info.coverimgList==null||info.coverimgList.size()<=0}"></c:when>
+				    	<c:otherwise>
+				    	<img alt="" src="${info.coverimgList.get(0)}">
+				    	</c:otherwise>
+				    </c:choose>
+					</td>
+					 <td>${info.title}</td>
 					<td>${info.viewcount}</td>
 					<td>${info.createtime}</td>
 					<td>${info.statusName}</td>
 					<td>
 						<button class="layui-btn layui-btn-small layui-btn-normal" onclick="edit('${info.id}')">编辑</button>
+						<c:choose>
+						<c:when test="${info.status==1}">
 						<button class="layui-btn layui-btn-small layui-btn-danger" onclick="deleteBaseInfo('${info.id}')">删除</button>
+						</c:when>
+						<c:otherwise>
+						<button class="layui-btn layui-btn-small layui-btn-danger" onclick="recover('${info.id}')">恢复</button>
+						</c:otherwise>
+						</c:choose>
+						
 					</td>
 				</tr>
 			</c:forEach>
@@ -81,6 +105,29 @@ var pindex=1;
     function deleteBaseInfo(id){
     	$.ajax({
     		url:'<%=path%>/article/deleteModel?id='+id
+    	    ,type:"post"
+    	    ,dataType:"json"
+    	    ,success:function(data){
+    	    	if(data.ok){
+        			alert(data.msg);
+        			location.href ='<%=path%>/article/list?pindex='+pindex;
+        		}else{
+        			alert(data.msg);
+        			//登录超时
+        			if(data.loginStatus!=undefined&&data.loginStatus=="-1"){
+        				location.href = '<%=path%>/';
+						}
+					}
+				},
+				error : function(e) {
+					alert('保存失败');
+				}
+
+			});
+		}
+    function recover(id){
+    	$.ajax({
+    		url:'<%=path%>/article/recover?id='+id
     	    ,type:"post"
     	    ,dataType:"json"
     	    ,success:function(data){

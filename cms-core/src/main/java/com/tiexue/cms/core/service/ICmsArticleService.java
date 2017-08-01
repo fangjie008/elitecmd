@@ -45,9 +45,17 @@ public interface ICmsArticleService {
      */
     int updateArticle(CmsArticle CmsArticle);
     /**
-     * 删除内容
+     * 删除内容(逻辑删除)
      * @param id
      * @return
      */
     int deleteArticle(int id);
+    
+    
+    /**
+     * 恢复内容
+     * @param id
+     * @return
+     */
+    int recoverArticle(int id);
 }

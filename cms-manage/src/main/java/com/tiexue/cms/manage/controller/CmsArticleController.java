@@ -180,6 +180,26 @@ public class CmsArticleController {
 		}
 		return JSON.toJSONString(resultMsg);
 	}
+	@RequestMapping("recover")
+	@ResponseBody
+	public String recover(HttpServletRequest request,Integer id){
+		ResultMsg resultMsg = new ResultMsg();
+		resultMsg.setOk(false);
+		try {
+			if(id!=null&&id>0){
+				int res=iCmsArticleService.recoverArticle(id);
+				resultMsg.setOk(true);
+				resultMsg.setMsg("恢复成功");
+			}else{
+				resultMsg.setMsg("参数异常");
+			}
+			
+		} catch (Exception e) {
+			logger.debug(" deleteModel error:"+e);
+			resultMsg.setMsg("恢复异常");
+		}
+		return JSON.toJSONString(resultMsg);
+	}
 
 	/**
 	 * 图片上传到资源服务器

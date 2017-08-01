@@ -32,17 +32,25 @@
                 <input type="password" id="repassword" name="repassword" placeholder="请确认新密码" lay-verify="chekpassword" class="layui-input">
             </div>
         </div>
-		<div class="layui-form-item">
+        <div class="layui-form-item">
 			<label class='layui-form-label'>权限</label>
 			<div class="layui-input-inline">
-				<input type="text" id="roles" name="roles" value="${mcpAdmin.auth}" autocomplete="off" class="layui-input">
+				<input type="text" id="roles" name="roles"  autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class='layui-form-label'>用户类型：</label>
+			<div class="layui-input-inline">
+			<select id="type" name="type" lay-verify="required" lay-search="">
+             ${type}
+            </select>
 			</div>
 		</div>
 
 		<div class="layui-form-item">
 			<label class='layui-form-label'>备注</label>
 			<div class="layui-input-inline">
-				<input type="text" id="intro" name="intro" value="${mcpAdmin.intro}" autocomplete="off" class="layui-input">
+				<input type="text" id="intro" name="intro"  autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -92,7 +100,10 @@ layui.use(['form','element','layer'], function(){
 
 	 $(".layui-form").submit(function(){
 	 	 //your function l例如 表单验证
-	
+		 var isOk=checkName();
+    	 if(!isOk){
+    		 return false; 
+    	 }
 	 	 $(this).ajaxSubmit({
 	 		url:'<%=path%>/admin/doAddUser',
 	 		type:"POST",
@@ -113,7 +124,34 @@ layui.use(['form','element','layer'], function(){
 	 	 });
 	     return false;   //防止表单自动提交  
 	});   
-});    
+}); 
+
+function checkName(){
+	var isOk=true;
+	var username=$("#username").val();
+    $.ajax({
+    	url:'<%=path%>/admin/checkName',
+    	type:"POST",
+    	async:false,
+		dataType:"json",
+		data:{'username':username},
+    	success:function(data){
+    		if(data.ok==true||data.ok=="true"){
+    			alert("用户:"+username+".已存在！");
+    			isOk=false;
+    		}
+    		else{
+    			isOk=true;
+    		}
+    		
+    	},
+    	error:function(data){
+    		isOk=true;
+    	}
+     
+    });
+    return isOk;
+}
 
 	</script>
 </body>

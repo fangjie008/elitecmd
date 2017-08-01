@@ -28,7 +28,7 @@ public class CmsExceptionHandler {
 		 */
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("exception", e);
-		mv.setViewName("mcpAdmin/unauthorized");
+		mv.setViewName("home/unauthorized");
 		return mv;
 	}
 }

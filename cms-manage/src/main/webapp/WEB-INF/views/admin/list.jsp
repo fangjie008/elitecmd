@@ -27,7 +27,7 @@
 		<thead>
 			<tr>
 				<th>用户名</th>
-				<th>类型(1:管理员,2:权限用户)</th>
+				<th>类型</th>
 				<th>角色列表</th>
 				<th>备注</th>
 				<th>操作</th>
@@ -37,7 +37,7 @@
 			<c:forEach items="${userList}" var="user">
 				<tr>
 					<td>${user.name}</td>
-					<td>${user.type}</td>
+					<td>${user.typename}</td>
 					<td>${user.auth}</td>
 					<td>${user.intro}</td>
 					<td>
