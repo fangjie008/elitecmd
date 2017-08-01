@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiexue.cms.core.mapper.CmsArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.tiexue.cms.core.entity.CmsArticle" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="Intro" property="intro" jdbcType="VARCHAR" />
+    <result column="CoverImgs" property="coverimgs" jdbcType="VARCHAR" />
+    <result column="ImgShowType" property="imgshowtype" jdbcType="INTEGER" />
+    <result column="ContentType" property="contenttype" jdbcType="INTEGER" />
+    <result column="PublisherId" property="publisherid" jdbcType="INTEGER" />
+    <result column="PublisherName" property="publishername" jdbcType="VARCHAR" />
+    <result column="PublisherIcon" property="publishericon" jdbcType="VARCHAR" />
+    <result column="ViewCount" property="viewcount" jdbcType="INTEGER" />
+    <result column="DingCount" property="dingcount" jdbcType="INTEGER" />
+    <result column="CaiCount" property="caicount" jdbcType="INTEGER" />
+    <result column="CommentCount" property="commentcount" jdbcType="INTEGER" />
+    <result column="ShareCount" property="sharecount" jdbcType="INTEGER" />
+    <result column="CollectionCount" property="collectioncount" jdbcType="INTEGER" />
+    <result column="ShowTime" property="showtime" jdbcType="TIMESTAMP" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Mark" property="mark" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="SourceType" property="sourcetype" jdbcType="INTEGER" />
+    <result column="Weight" property="weight" jdbcType="INTEGER" />
+    <result column="OriginalId" property="originalid" jdbcType="VARCHAR" />
+    <result column="OriginalTitle" property="originaltitle" jdbcType="VARCHAR" />
+    <result column="OriginalUrl" property="originalurl" jdbcType="VARCHAR" />
+    <result column="FromId" property="fromid" jdbcType="INTEGER" />
+    <result column="FromName" property="fromname" jdbcType="VARCHAR" />
+    <result column="PlatformId" property="platformid" jdbcType="INTEGER" />
+    <result column="PlatformName" property="platformname" jdbcType="VARCHAR" />
+    <result column="Tags" property="tags" jdbcType="VARCHAR" />
+    <result column="ContentLen" property="contentlen" jdbcType="INTEGER" />
+    <result column="CategoryId" property="categoryid" jdbcType="INTEGER" />
+    <result column="Uscore" property="uscore" jdbcType="INTEGER" />
+    <result column="UniqueFlag" property="uniqueflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, Title, Intro, CoverImgs, ImgShowType, ContentType, PublisherId, PublisherName, 
+    PublisherIcon, ViewCount, DingCount, CaiCount, CommentCount, ShareCount, CollectionCount, 
+    ShowTime, CreateTime, Mark, Status, SourceType, Weight, OriginalId, OriginalTitle, 
+    OriginalUrl, FromId, FromName, PlatformId, PlatformName, Tags, ContentLen, CategoryId, 
+    Uscore, UniqueFlag
+  </sql>
+  <insert id="insertSelective" parameterType="com.tiexue.cms.core.entity.CmsArticle" >
+    insert into CmsArticle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="intro != null" >
+        Intro,
+      </if>
+      <if test="coverimgs != null" >
+        CoverImgs,
+      </if>
+      <if test="imgshowtype != null" >
+        ImgShowType,
+      </if>
+      <if test="contenttype != null" >
+        ContentType,
+      </if>
+      <if test="publisherid != null" >
+        PublisherId,
+      </if>
+      <if test="publishername != null" >
+        PublisherName,
+      </if>
+      <if test="publishericon != null" >
+        PublisherIcon,
+      </if>
+      <if test="viewcount != null" >
+        ViewCount,
+      </if>
+      <if test="dingcount != null" >
+        DingCount,
+      </if>
+      <if test="caicount != null" >
+        CaiCount,
+      </if>
+      <if test="commentcount != null" >
+        CommentCount,
+      </if>
+      <if test="sharecount != null" >
+        ShareCount,
+      </if>
+      <if test="collectioncount != null" >
+        CollectionCount,
+      </if>
+      <if test="showtime != null" >
+        ShowTime,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="mark != null" >
+        Mark,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="sourcetype != null" >
+        SourceType,
+      </if>
+      <if test="weight != null" >
+        Weight,
+      </if>
+      <if test="originalid != null" >
+        OriginalId,
+      </if>
+      <if test="originaltitle != null" >
+        OriginalTitle,
+      </if>
+      <if test="originalurl != null" >
+        OriginalUrl,
+      </if>
+      <if test="fromid != null" >
+        FromId,
+      </if>
+      <if test="fromname != null" >
+        FromName,
+      </if>
+      <if test="platformid != null" >
+        PlatformId,
+      </if>
+      <if test="platformname != null" >
+        PlatformName,
+      </if>
+      <if test="tags != null" >
+        Tags,
+      </if>
+      <if test="contentlen != null" >
+        ContentLen,
+      </if>
+      <if test="categoryid != null" >
+        CategoryId,
+      </if>
+      <if test="uscore != null" >
+        Uscore,
+      </if>
+      <if test="uniqueflag != null" >
+        UniqueFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="coverimgs != null" >
+        #{coverimgs,jdbcType=VARCHAR},
+      </if>
+      <if test="imgshowtype != null" >
+        #{imgshowtype,jdbcType=INTEGER},
+      </if>
+      <if test="contenttype != null" >
+        #{contenttype,jdbcType=INTEGER},
+      </if>
+      <if test="publisherid != null" >
+        #{publisherid,jdbcType=INTEGER},
+      </if>
+      <if test="publishername != null" >
+        #{publishername,jdbcType=VARCHAR},
+      </if>
+      <if test="publishericon != null" >
+        #{publishericon,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="dingcount != null" >
+        #{dingcount,jdbcType=INTEGER},
+      </if>
+      <if test="caicount != null" >
+        #{caicount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="sharecount != null" >
+        #{sharecount,jdbcType=INTEGER},
+      </if>
+      <if test="collectioncount != null" >
+        #{collectioncount,jdbcType=INTEGER},
+      </if>
+      <if test="showtime != null" >
+        #{showtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sourcetype != null" >
+        #{sourcetype,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="originalid != null" >
+        #{originalid,jdbcType=VARCHAR},
+      </if>
+      <if test="originaltitle != null" >
+        #{originaltitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalurl != null" >
+        #{originalurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fromid != null" >
+        #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="fromname != null" >
+        #{fromname,jdbcType=VARCHAR},
+      </if>
+      <if test="platformid != null" >
+        #{platformid,jdbcType=INTEGER},
+      </if>
+      <if test="platformname != null" >
+        #{platformname,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="contentlen != null" >
+        #{contentlen,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="uscore != null" >
+        #{uscore,jdbcType=INTEGER},
+      </if>
+      <if test="uniqueflag != null" >
+        #{uniqueflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiexue.cms.core.entity.CmsArticle" >
+    update CmsArticle
+    <set >
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        Intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="coverimgs != null" >
+        CoverImgs = #{coverimgs,jdbcType=VARCHAR},
+      </if>
+      <if test="imgshowtype != null" >
+        ImgShowType = #{imgshowtype,jdbcType=INTEGER},
+      </if>
+      <if test="contenttype != null" >
+        ContentType = #{contenttype,jdbcType=INTEGER},
+      </if>
+      <if test="publisherid != null" >
+        PublisherId = #{publisherid,jdbcType=INTEGER},
+      </if>
+      <if test="publishername != null" >
+        PublisherName = #{publishername,jdbcType=VARCHAR},
+      </if>
+      <if test="publishericon != null" >
+        PublisherIcon = #{publishericon,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        ViewCount = #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="dingcount != null" >
+        DingCount = #{dingcount,jdbcType=INTEGER},
+      </if>
+      <if test="caicount != null" >
+        CaiCount = #{caicount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        CommentCount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="sharecount != null" >
+        ShareCount = #{sharecount,jdbcType=INTEGER},
+      </if>
+      <if test="collectioncount != null" >
+        CollectionCount = #{collectioncount,jdbcType=INTEGER},
+      </if>
+      <if test="showtime != null" >
+        ShowTime = #{showtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        Mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sourcetype != null" >
+        SourceType = #{sourcetype,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        Weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="originalid != null" >
+        OriginalId = #{originalid,jdbcType=VARCHAR},
+      </if>
+      <if test="originaltitle != null" >
+        OriginalTitle = #{originaltitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalurl != null" >
+        OriginalUrl = #{originalurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fromid != null" >
+        FromId = #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="fromname != null" >
+        FromName = #{fromname,jdbcType=VARCHAR},
+      </if>
+      <if test="platformid != null" >
+        PlatformId = #{platformid,jdbcType=INTEGER},
+      </if>
+      <if test="platformname != null" >
+        PlatformName = #{platformname,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        Tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="contentlen != null" >
+        ContentLen = #{contentlen,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null" >
+        CategoryId = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="uscore != null" >
+        Uscore = #{uscore,jdbcType=INTEGER},
+      </if>
+      <if test="uniqueflag != null" >
+        UniqueFlag = #{uniqueflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

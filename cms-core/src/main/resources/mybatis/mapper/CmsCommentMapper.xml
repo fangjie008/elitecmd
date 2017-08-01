@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiexue.cms.core.mapper.CmsCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.tiexue.cms.core.entity.CmsComment" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="ArticleId" property="articleid" jdbcType="INTEGER" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="Imgs" property="imgs" jdbcType="VARCHAR" />
+    <result column="PublisherId" property="publisherid" jdbcType="INTEGER" />
+    <result column="PublisherName" property="publishername" jdbcType="VARCHAR" />
+    <result column="PublisherIcon" property="publishericon" jdbcType="VARCHAR" />
+    <result column="TopTargetCommentId" property="toptargetcommentid" jdbcType="INTEGER" />
+    <result column="TargetCommentId" property="targetcommentid" jdbcType="INTEGER" />
+    <result column="TargetUserId" property="targetuserid" jdbcType="INTEGER" />
+    <result column="TargetUserName" property="targetusername" jdbcType="VARCHAR" />
+    <result column="DingCount" property="dingcount" jdbcType="INTEGER" />
+    <result column="CaiCount" property="caicount" jdbcType="INTEGER" />
+    <result column="CommentCount" property="commentcount" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="ShowTime" property="showtime" jdbcType="TIMESTAMP" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Mark" property="mark" jdbcType="INTEGER" />
+    <result column="Weight" property="weight" jdbcType="INTEGER" />
+    <result column="Flag" property="flag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, ArticleId, Content, Imgs, PublisherId, PublisherName, PublisherIcon, TopTargetCommentId, 
+    TargetCommentId, TargetUserId, TargetUserName, DingCount, CaiCount, CommentCount, 
+    Status, ShowTime, CreateTime, Mark, Weight, Flag
+  </sql>
+  <insert id="insertSelective" parameterType="com.tiexue.cms.core.entity.CmsComment" >
+    insert into CmsComment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="articleid != null" >
+        ArticleId,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="imgs != null" >
+        Imgs,
+      </if>
+      <if test="publisherid != null" >
+        PublisherId,
+      </if>
+      <if test="publishername != null" >
+        PublisherName,
+      </if>
+      <if test="publishericon != null" >
+        PublisherIcon,
+      </if>
+      <if test="toptargetcommentid != null" >
+        TopTargetCommentId,
+      </if>
+      <if test="targetcommentid != null" >
+        TargetCommentId,
+      </if>
+      <if test="targetuserid != null" >
+        TargetUserId,
+      </if>
+      <if test="targetusername != null" >
+        TargetUserName,
+      </if>
+      <if test="dingcount != null" >
+        DingCount,
+      </if>
+      <if test="caicount != null" >
+        CaiCount,
+      </if>
+      <if test="commentcount != null" >
+        CommentCount,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="showtime != null" >
+        ShowTime,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="mark != null" >
+        Mark,
+      </if>
+      <if test="weight != null" >
+        Weight,
+      </if>
+      <if test="flag != null" >
+        Flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null" >
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherid != null" >
+        #{publisherid,jdbcType=INTEGER},
+      </if>
+      <if test="publishername != null" >
+        #{publishername,jdbcType=VARCHAR},
+      </if>
+      <if test="publishericon != null" >
+        #{publishericon,jdbcType=VARCHAR},
+      </if>
+      <if test="toptargetcommentid != null" >
+        #{toptargetcommentid,jdbcType=INTEGER},
+      </if>
+      <if test="targetcommentid != null" >
+        #{targetcommentid,jdbcType=INTEGER},
+      </if>
+      <if test="targetuserid != null" >
+        #{targetuserid,jdbcType=INTEGER},
+      </if>
+      <if test="targetusername != null" >
+        #{targetusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dingcount != null" >
+        #{dingcount,jdbcType=INTEGER},
+      </if>
+      <if test="caicount != null" >
+        #{caicount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showtime != null" >
+        #{showtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiexue.cms.core.entity.CmsComment" >
+    update CmsComment
+    <set >
+      <if test="articleid != null" >
+        ArticleId = #{articleid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null" >
+        Imgs = #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherid != null" >
+        PublisherId = #{publisherid,jdbcType=INTEGER},
+      </if>
+      <if test="publishername != null" >
+        PublisherName = #{publishername,jdbcType=VARCHAR},
+      </if>
+      <if test="publishericon != null" >
+        PublisherIcon = #{publishericon,jdbcType=VARCHAR},
+      </if>
+      <if test="toptargetcommentid != null" >
+        TopTargetCommentId = #{toptargetcommentid,jdbcType=INTEGER},
+      </if>
+      <if test="targetcommentid != null" >
+        TargetCommentId = #{targetcommentid,jdbcType=INTEGER},
+      </if>
+      <if test="targetuserid != null" >
+        TargetUserId = #{targetuserid,jdbcType=INTEGER},
+      </if>
+      <if test="targetusername != null" >
+        TargetUserName = #{targetusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dingcount != null" >
+        DingCount = #{dingcount,jdbcType=INTEGER},
+      </if>
+      <if test="caicount != null" >
+        CaiCount = #{caicount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        CommentCount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showtime != null" >
+        ShowTime = #{showtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        Mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        Weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        Flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
