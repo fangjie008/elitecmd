@@ -139,6 +139,20 @@ public interface CmsArticleMapper {
     @ResultMap("BaseResultMap")
     CmsArticle getModel(@Param("id")int id);
     
+    
+    @Select({
+        "select",
+        "Id, Title, Intro, CoverImgs, ImgShowType, ContentType, PublisherId, PublisherName, ",
+        "PublisherIcon, ViewCount, DingCount, CaiCount, CommentCount, ShareCount, CollectionCount, ",
+        "ShowTime, CreateTime, Mark, Status, SourceType, Weight, OriginalId, OriginalTitle, ",
+        "OriginalUrl, FromId, FromName, PlatformId, PlatformName, Tags, ContentLen, CategoryId, ",
+        "Uscore, UniqueFlag",
+        "from CmsArticle",
+        "where Id = #{id,jdbcType=INTEGER} and Status=#{status,jdbcType=INTEGER}"
+    })
+    @ResultMap("BaseResultMap")
+    CmsArticle getNormalModel(@Param("id")int id,@Param("status")int status);
+    
     @Select({
         "select",
         "Id, Title, Intro, CoverImgs, ImgShowType, ContentType, PublisherId, PublisherName, ",

@@ -122,7 +122,7 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 
 	@Override
 	public int getCount(String categorys) {
-		String strWhere=" status="+CmsContants.ArticleStatus_Normal;
+		String strWhere=" 1=1";
 		if(categorys!=null&&!"".equals(categorys)){
 			strWhere +=" and CategoryId in ("+categorys+")";
 		}
@@ -164,6 +164,30 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 	     int updateNum=cmsArticleMapper.updeteStatus(CmsContants.ArticleStatus_Normal, id);
 	     return updateNum;
 		   
+	}
+
+	@Override
+	public List<CmsArticle> getMoreList(String categorys, Integer pageNo, Integer pageSize) {
+		String strWhere=" status="+CmsContants.ArticleStatus_Normal;
+		if(categorys!=null&&!"".equals(categorys)){
+			strWhere +=" and CategoryId in ("+categorys+")";
+		}
+		return cmsArticleMapper.getList(strWhere,pageNo,pageSize);
+	}
+
+	@Override
+	public CmsArticle getNormalDetail(int id) {
+		CmsArticle cmsArticle;
+		cmsArticle=cmsArticleMapper.getNormalModel(id, CmsContants.ArticleStatus_Normal);
+		if(cmsArticle!=null){
+			CmsArticleSub CmsArticleSub= iCmsArticleSubService.select(id);
+			if(CmsArticleSub!=null){
+				cmsArticle.setOriginalContent(CmsArticleSub.getOriginalcontent());
+				cmsArticle.setContentPic(CmsArticleSub.getContentpic());
+				cmsArticle.setMaterials(CmsArticleSub.getMaterials());
+			}
+		}
+		return cmsArticle;
 	}
 
 

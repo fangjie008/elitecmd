@@ -33,11 +33,18 @@ public interface ICmsArticleService {
      */
     int getCount(String strWhere);
     /**
-     * 获取未删除的文章明细信息
+     * 获取所有文章明细信息
      * @param id
      * @return
      */
     CmsArticle getDetail(int id);
+    
+    /**
+     * 获取正常状态文章明细信息
+     * @param id
+     * @return
+     */
+    CmsArticle getNormalDetail(int id);
     /**
      * 更新内容
      * @param CmsArticle
@@ -58,4 +65,13 @@ public interface ICmsArticleService {
      * @return
      */
     int recoverArticle(int id);
+    
+    /**
+     * 获取正常状态的文章列表
+     * @param categorys
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    List<CmsArticle> getMoreList(String categorys,Integer pageNo,Integer pageSize);
 }

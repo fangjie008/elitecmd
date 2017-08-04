@@ -1,0 +1,165 @@
+.header {
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	background:#ab1234;
+}
+
+.header section {
+	line-height: 44px;
+	position: relative;
+	text-align: center;
+	width: 100%;
+	background: #c6020e;
+}
+
+.header section img {
+	margin-bottom: -3px;
+}
+
+.header section div {
+	position: absolute;
+	width: 50px;
+	text-align: center;
+	height: 100%;
+	line-height: 44px;
+	color: white;
+	font-size: 1.5em;
+}
+
+.header nav {
+	background: rgba(255, 255, 255, .9);
+	border-bottom: solid 1px #ebebeb;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.header nav.nav-fixed {
+	position: fixed;
+}
+
+.header nav a {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+	line-height: 37px;
+}
+
+.header nav a.selected {
+	color: #c6020e;
+	font-weight: bold;
+}
+
+footer {
+	margin-top: 20px;
+	line-height: 20px;
+	padding: 0 8px;
+}
+/************************************************************/
+.header-space-holder {
+	height: 85px;
+}
+/************************************************************/
+.float-container {
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	-webkit-transition: background 0.4s ease;
+	-moz-transition: background 0.4s ease;
+	-o-transition: background 0.4s ease;
+	-ms-transition: background 0.4s ease;
+	transition: background 0.4s ease;
+	pointer-events: none;
+}
+
+.float-container-right, .float-container-left {
+	position: absolute;
+	width: 40%;
+	top: 0;
+	bottom: 0;
+	background: #333;
+	-webkit-transition: none 0.4s ease;
+	-moz-transition: none 0.4s ease;
+	-o-transition: none 0.4s ease;
+	-ms-transition: none 0.4s ease;
+	transition: none 0.4s ease;
+	-webkit-transition-property: left, right;
+	-moz-transition-property: left, right;
+	-o-transition-property: left, right;
+	-ms-transition-property: left, right;
+	transition-property: left, right;
+	box-shadow: -3px 0 3px rgba(0, 0, 0, 0.3);
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.float-container-showright .float-container-right {
+	left: 60%;
+}
+
+.float-container-showleft .float-container-left {
+	right: 60%;
+}
+
+.float-container-right {
+	left: 102%;
+}
+
+.float-container-left {
+	right: 102%;
+}
+
+.float-container-showleft, .float-container-showright {
+	background: rgba(0, 0, 0, 0.4);
+	pointer-events: auto;
+}
+
+/************************************************************/
+.global-tip {
+	position: fixed;
+	padding: 3px 0;
+	background: rgba(90, 160, 230, .9);
+	text-align: center;
+	line-height: 1.5em;
+	font-size: 14px;
+	color: #fff;
+	z-index: 3;
+	border-radius: 6px;
+	left: 8px;
+	right: 8px;
+	top: 2px;
+}
+
+/************************************************************/
+.fa {
+	transform: none;
+}
+/************************************************************/
+.float-text {
+	position: absolute;
+	color: #c6020e;
+	font-weight: bold;
+}
+/************************************************************/
+.btn-crosswide {
+	background: #6794f6;
+	display: block;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	padding: 10px 8px 10px 0;
+}
+
+.float-bottomad {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.8);
+}
+/************************************************************/
