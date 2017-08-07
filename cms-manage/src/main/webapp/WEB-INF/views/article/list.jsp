@@ -44,9 +44,11 @@
 				   
 				    <td>
 				    <c:choose>
-				    	<c:when test="${info.coverimgList==null||info.coverimgList.size()<=0}"></c:when>
+				    	<c:when test="${info.coverimgList==null||info.coverimgList.size()<=0}">
+				    	<a href="http://cmswap.top885.cn/home/detail?id=${info.id}" target="_blank"><img alt="" src="#"></a>
+				    	</c:when>
 				    	<c:otherwise>
-				    	<img alt="" src="${info.coverimgList.get(0)}">
+				    	<a href="http://cmswap.top885.cn/home/detail?id=${info.id}" target="_blank"><img alt="" src="${info.coverimgList.get(0)}"></a>
 				    	</c:otherwise>
 				    </c:choose>
 					</td>

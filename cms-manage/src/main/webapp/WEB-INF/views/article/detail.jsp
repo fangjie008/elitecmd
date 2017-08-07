@@ -138,6 +138,7 @@ td {
 		
 	</form>
 <script type="text/javascript">
+document.domain = "top885.cn";
 var ue = UE.getEditor('container');
 ue.addListener("ready", function () {
 	ue.setContent($("#bodyContent").val(), false);
