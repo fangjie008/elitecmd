@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tiexue.cms.core.cache.CacheKey;
 import com.tiexue.cms.core.entity.CmsArticle;
 import com.tiexue.cms.core.service.ICmsArticleService;
 import com.tiexue.cms.wap.dto.ApiContent;
@@ -38,7 +39,7 @@ public class HomeController {
 			}
 			
 		} catch (Exception e) {
-			logger.debug("list exception:"+e);
+			logger.info("list exception:"+e);
 		}
 		
 		return "home/list";
@@ -62,7 +63,7 @@ public class HomeController {
 			}
 			request.setAttribute("detail", apiContent);
 		} catch (Exception e) {
-			logger.debug("detail exception:"+e);
+			logger.info("detail exception:"+e);
 		}
 		return "home/detail";
 	}

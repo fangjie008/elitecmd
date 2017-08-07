@@ -63,7 +63,7 @@ public class ConvertApiContent {
 			List<String> imgs= JSON.parseObject(article.getCoverimgs(),new ArrayList<String>().getClass());
 	    	articleDto.setCoverimglist(article.getCoverimgs()==null?new ArrayList<String>():imgs);
 		} catch (Exception e) {
-			logger.debug("articleToDto execption :"+e);
+			logger.info("articleToDto execption :"+e);
 		}
 	
 		return articleDto;

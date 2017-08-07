@@ -1,6 +1,6 @@
 package com.tiexue.cms.core.service.impl;
 
-import java.util.Date;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,14 +9,14 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tiexue.cms.core.cache.CacheKey;
+import com.tiexue.cms.core.cache.MemoryCache;
 import com.tiexue.cms.core.define.CmsContants;
 import com.tiexue.cms.core.entity.CmsArticle;
 import com.tiexue.cms.core.entity.CmsArticleSub;
-import com.tiexue.cms.core.entity.CmsCategory;
+
 
 import com.tiexue.cms.core.mapper.CmsArticleMapper;
-import com.tiexue.cms.core.mapper.CmsArticleSubMapper;
-import com.tiexue.cms.core.mapper.CmsCategoryMapper;
 import com.tiexue.cms.core.service.ICmsArticleService;
 import com.tiexue.cms.core.service.ICmsArticleSubService;
 import com.tiexue.cms.core.service.ICmsCategoryService;
@@ -25,7 +25,8 @@ import com.tiexue.cms.core.service.ICmsCategoryService;
 @Service("CmsArticleServiceImpl")
 public class CmsArticleServiceImpl implements ICmsArticleService {
 	// 日志
-	private Logger logger = Logger.getLogger(CmsArticleServiceImpl.class);
+	private static Logger logger = Logger.getLogger(CmsArticleServiceImpl.class);
+//	private MemoryCache memoryCache= MemoryCache.getInstance();
 	@Resource
 	CmsArticleMapper cmsArticleMapper;
 	@Resource
@@ -166,27 +167,55 @@ public class CmsArticleServiceImpl implements ICmsArticleService {
 		   
 	}
 
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CmsArticle> getMoreList(String categorys, Integer pageNo, Integer pageSize) {
+
+		MemoryCache memoryCache= MemoryCache.getInstance();
+		List<CmsArticle> articles=null;
 		String strWhere=" status="+CmsContants.ArticleStatus_Normal;
 		if(categorys!=null&&!"".equals(categorys)){
 			strWhere +=" and CategoryId in ("+categorys+")";
 		}
-		return cmsArticleMapper.getList(strWhere,pageNo,pageSize);
+		
+		try {
+			String key=CacheKey.getWap_list("1", 0);
+		    articles= (List<CmsArticle>)memoryCache.get(key);
+			if(articles!=null)
+				return articles;
+			articles=cmsArticleMapper.getList(strWhere,pageNo,pageSize);
+			memoryCache.set(key, 10, articles);
+			
+		} catch (Exception e) {
+			logger.error("getMoreList execption:"+e);
+		}
+		return articles;
 	}
 
 	@Override
 	public CmsArticle getNormalDetail(int id) {
-		CmsArticle cmsArticle;
-		cmsArticle=cmsArticleMapper.getNormalModel(id, CmsContants.ArticleStatus_Normal);
-		if(cmsArticle!=null){
-			CmsArticleSub CmsArticleSub= iCmsArticleSubService.select(id);
-			if(CmsArticleSub!=null){
-				cmsArticle.setOriginalContent(CmsArticleSub.getOriginalcontent());
-				cmsArticle.setContentPic(CmsArticleSub.getContentpic());
-				cmsArticle.setMaterials(CmsArticleSub.getMaterials());
+		CmsArticle cmsArticle=null;
+		MemoryCache memoryCache= MemoryCache.getInstance();
+		try {
+			String key=CacheKey.getWap_detail(id);
+			cmsArticle= (CmsArticle)memoryCache.get(key);
+			if(cmsArticle!=null)
+				return cmsArticle;
+			cmsArticle=cmsArticleMapper.getNormalModel(id, CmsContants.ArticleStatus_Normal);
+			if(cmsArticle!=null){
+				CmsArticleSub CmsArticleSub= iCmsArticleSubService.select(id);
+				if(CmsArticleSub!=null){
+					cmsArticle.setOriginalContent(CmsArticleSub.getOriginalcontent());
+					cmsArticle.setContentPic(CmsArticleSub.getContentpic());
+					cmsArticle.setMaterials(CmsArticleSub.getMaterials());
+				}
 			}
+			memoryCache.set(key, 2*60, cmsArticle);
+		} catch (Exception e) {
+			logger.error("getNormalDetail error:"+e);
 		}
+		
 		return cmsArticle;
 	}
 
