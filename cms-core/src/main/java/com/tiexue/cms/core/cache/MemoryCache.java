@@ -21,7 +21,7 @@ public class MemoryCache {
 	/**
 	 * 缓存实例对象
 	 */
-	private volatile static MemoryCache memoryCache;
+	private static MemoryCache memoryCache;
 	/**
 	 * 是否正在回收超时的缓存数据
 	 */
@@ -29,7 +29,7 @@ public class MemoryCache {
 	/**
 	 * 缓存容器
 	 */
-	private volatile static Map<String,Object> cacheMap=new ConcurrentHashMap<String,Object>();
+	private static Map<String,Object> cacheMap=new ConcurrentHashMap<String,Object>();
 	
 	/**
 	 * 私有构造方法
