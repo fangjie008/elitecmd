@@ -21,11 +21,11 @@ public class MemoryCache {
 	/**
 	 * 缓存实例对象
 	 */
-	private volatile static MemoryCache memoryCache;
+	private static MemoryCache memoryCache;
 	/**
 	 * 是否正在回收超时的缓存数据
 	 */
-	private  static boolean isGc;
+	private static boolean isGc;
 	/**
 	 * 缓存容器
 	 */
