@@ -111,7 +111,7 @@ public class MemoryCache {
 			}
 		} catch (Exception e) {
 			logger.error("set cache exception key:"+key);
-			logger.error("exception:"+e);
+			logger.error("exception:"+e.getMessage());
 		}
 		
 	}
@@ -175,17 +175,19 @@ public class MemoryCache {
 				Thread.sleep(60*60*1000);
 				logger.info("开始回收缓存数据");
 				isGc=true;
-				Iterator<Map.Entry<String, Object>> it=cacheMap.entrySet().iterator();
-				while(it.hasNext()){
-					Map.Entry<String, Object> entry=it.next(); 
-					CacheUnit cacheUnit=(CacheUnit)entry.getValue();
-					if(cacheUnit!=null){
-						if(!cacheUnit.isEnabled()){
-							it.remove();
-							logger.info("回收一条数据 ");
+				if(cacheMap!=null){
+					Iterator<Map.Entry<String, Object>> it=cacheMap.entrySet().iterator();
+					while(it.hasNext()){
+						Map.Entry<String, Object> entry=it.next(); 
+						CacheUnit cacheUnit=(CacheUnit)entry.getValue();
+						if(cacheUnit!=null){
+							if(!cacheUnit.isEnabled()){
+								it.remove();
+								logger.info("回收一条数据 ");
+							}
 						}
+						
 					}
-					
 				}
 			} catch (Exception e) {
 				logger.error("回收缓存数据异常："+e);
