@@ -52,7 +52,12 @@ public class ImgUtils {
 	}
 	
 
-	
+	/**
+	 * 上传本地图片
+	 * @param file
+	 * @param imgFormatList
+	 * @return
+	 */
 	public static String updateImage(InputStream is, String fileName, long maxSize) {
 		String urlStr = getPicuploadurlFile();
 		String res = "";
@@ -115,7 +120,12 @@ public class ImgUtils {
 		}
 		return res;
 	}
-
+	/**
+	 * 上传本地图片
+	 * @param file
+	 * @param imgFormatList
+	 * @return
+	 */
 	public static ImgUploadRet updateImage(MultipartFile file, ImgFormat... imgFormatList) {
 		String urlStr =getPicuploadurlFile();
 		String res = "";
